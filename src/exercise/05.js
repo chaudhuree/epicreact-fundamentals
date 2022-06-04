@@ -41,6 +41,8 @@ const largeBox = (
 function App() {
   return (
     <div>
+      {/*the items are called in a 3rd bracket because they are not functin */}
+      {/*if they were functions then we would call them <></> like this*/}
       {smallBox}
       {mediumBox}
       {largeBox}
