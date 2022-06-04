@@ -41,23 +41,64 @@ import * as React from 'react'
 // export default App
 
 //<---- using useRef ---->
+// function UsernameForm({onSubmitUsername}) {
+//   const usernameRef=React.useRef()
+//   function handleSubmit(event) {
+//     event.preventDefault()
+//     let value = usernameRef.current.value
+//     // let inputvalue = document.querySelector('#username').value
+//     // console.log(inputvalue)
+//     onSubmitUsername(value)
+//
+//   }
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="username">Username:</label>
+//         <input ref={usernameRef} type="text" name="user-name" id="username" />
+//       </div>
+//       <button type="submit">Submit</button>
+//     </form>
+//   )
+// }
+// function App() {
+//   const onSubmitUsername = username => alert(`You entered: ${username}`)
+//   return <UsernameForm onSubmitUsername={onSubmitUsername} />
+// }
+// export default App
+
+//<---- username input only accepts lower-case characters ---->
 function UsernameForm({onSubmitUsername}) {
-  const usernameRef=React.useRef()
+  const [error, setError] = React.useState(null)
+  const usernameRef = React.useRef()
   function handleSubmit(event) {
     event.preventDefault()
     let value = usernameRef.current.value
     // let inputvalue = document.querySelector('#username').value
     // console.log(inputvalue)
     onSubmitUsername(value)
-
+  }
+  const handleChange = event => {
+    const value = event.target.value
+    let isLower = value === value.toLowerCase()
+    setError(isLower ? null : 'please put only lowercase word')
   }
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="username">Username:</label>
-        <input ref={usernameRef} type="text" name="user-name" id="username" />
+        <input
+          ref={usernameRef}
+          type="text"
+          name="user-name"
+          id="username"
+          onChange={handleChange}
+        />
       </div>
-      <button type="submit">Submit</button>
+      <p style={{color: 'red'}}>{error}</p>
+      <button disabled={Boolean(error)} type="submit">
+        Submit
+      </button>
     </form>
   )
 }
