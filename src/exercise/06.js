@@ -68,42 +68,82 @@ import * as React from 'react'
 // export default App
 
 //<---- username input only accepts lower-case characters ---->
+// function UsernameForm({onSubmitUsername}) {
+//   const [error, setError] = React.useState(null)
+//   const usernameRef = React.useRef()
+//   function handleSubmit(event) {
+//     event.preventDefault()
+//     let value = usernameRef.current.value
+//     // let inputvalue = document.querySelector('#username').value
+//     // console.log(inputvalue)
+//     onSubmitUsername(value)
+//   }
+//   const handleChange = event => {
+//     const value = event.target.value
+//     let isLower = value === value.toLowerCase()
+//     setError(isLower ? null : 'please put only lowercase word')
+//   }
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <div>
+//         <label htmlFor="username">Username:</label>
+//         <input
+//           ref={usernameRef}
+//           type="text"
+//           name="user-name"
+//           id="username"
+//           onChange={handleChange}
+//         />
+//       </div>
+//       <p style={{color: 'red'}}>{error}</p>
+//       <button disabled={Boolean(error)} type="submit">
+//         Submit
+//       </button>
+//     </form>
+//   )
+// }
+// function App() {
+//   const onSubmitUsername = username => alert(`You entered: ${username}`)
+//   return <UsernameForm onSubmitUsername={onSubmitUsername} />
+// }
+// export default App
+
+
+//<---- make it lowercase always ---->
 function UsernameForm({onSubmitUsername}) {
-  const [error, setError] = React.useState(null)
-  const usernameRef = React.useRef()
+  const [username, setUsername] = React.useState('')
+
   function handleSubmit(event) {
     event.preventDefault()
-    let value = usernameRef.current.value
-    // let inputvalue = document.querySelector('#username').value
-    // console.log(inputvalue)
-    onSubmitUsername(value)
+    onSubmitUsername(username)
   }
-  const handleChange = event => {
-    const value = event.target.value
-    let isLower = value === value.toLowerCase()
-    setError(isLower ? null : 'please put only lowercase word')
+
+  function handleChange(event) {
+    setUsername(event.target.value.toLowerCase())
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="usernameInput">Username:</label>
         <input
-          ref={usernameRef}
+          id="usernameInput"
           type="text"
-          name="user-name"
-          id="username"
           onChange={handleChange}
+          value={username}
         />
       </div>
-      <p style={{color: 'red'}}>{error}</p>
-      <button disabled={Boolean(error)} type="submit">
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
   )
 }
+
 function App() {
   const onSubmitUsername = username => alert(`You entered: ${username}`)
-  return <UsernameForm onSubmitUsername={onSubmitUsername} />
+  return (
+    <div style={{minWidth: 400}}>
+      <UsernameForm onSubmitUsername={onSubmitUsername} />
+    </div>
+  )
 }
 export default App
